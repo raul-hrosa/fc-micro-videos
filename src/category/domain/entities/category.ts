@@ -1,4 +1,4 @@
-import UniqueEntityId from '../../../@seedwork/domain/unitque-entity-id.vo';
+import UniqueEntityId from '../../../@seedwork/domain/value-objects/unitque-entity-id.vo';
 
 export type CategoryProps = {
     name: string;
@@ -8,7 +8,6 @@ export type CategoryProps = {
 }
 
 export default class Category {
-
     public readonly id: UniqueEntityId;
 
     constructor (public readonly props: CategoryProps, id?: UniqueEntityId) {
