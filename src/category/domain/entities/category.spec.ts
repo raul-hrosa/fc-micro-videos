@@ -1,6 +1,6 @@
 import Category, { CategoryProps } from './category'
 import { omit } from 'lodash'
-import UniqueEntityId from '../../../@seedwork/domain/value-objects/unitque-entity-id.vo'
+import UniqueEntityId from '../../../@seedwork/domain/value-objects/unique-entity-id.vo'
 
 describe("Category Unit Test", () => {
     test('constructor of category', () => {
@@ -68,13 +68,16 @@ describe("Category Unit Test", () => {
         data.forEach(i => {
             const category = new Category(i.props, i.id as any);
             expect(category.id).not.toBeNull
-            expect(category.id).toBeInstanceOf(UniqueEntityId)
+            expect(category.uniqueEntityId).toBeInstanceOf(UniqueEntityId)
         })
     })
 
-    test('getter of name props', () => {
-        const category = new Category({name: 'Movie'});
+    test('getter and setter of name props', () => {
+        let category = new Category({name: 'Movie'});
         expect(category.name).toBe('Movie')
+
+        category["name"] = 'Other Name'
+        expect(category.name).toBe('Other Name')
     })
 
     test('getter and setter of description props', () => {
@@ -121,5 +124,30 @@ describe("Category Unit Test", () => {
             created_at: created_at
         })
         expect(category.created_at).toBe(created_at)       
+    })
+
+    test('should update a category', () => {
+        const category = new Category({name: "Movie"})
+        category.update("Documentary", "Some description")
+        expect(category.name).toBe("Documentary")
+        expect(category.description).toBe("Some description")
+    })
+
+    test('should active a category', () => {
+        const category = new Category({
+            name: "Movie",
+            is_active: false
+        })        
+        category.activate()
+        expect(category.is_active).toBeTruthy()
+    })
+
+    test('should deactive a category', () => {
+        const category = new Category({
+            name: "Movie",
+            is_active: true
+        })        
+        category.deactivate()
+        expect(category.is_active).toBeFalsy()
     })
 })
