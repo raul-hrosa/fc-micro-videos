@@ -1,5 +1,5 @@
 import UniqueEntityId from '../unique-entity-id.vo'
-import InvalidUuidError from '../../../errors/invalid-uuid.error';
+import InvalidUuidError from '../../errors/invalid-uuid.error';
 import { validate as uuidValidate } from 'uuid'
 
 function spyValidateMethod() {

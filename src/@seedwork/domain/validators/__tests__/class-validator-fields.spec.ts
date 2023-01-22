@@ -1,0 +1,35 @@
+import ClassValidatorFields from '../class-validator-fields';
+import * as libClassValidator from 'class-validator'
+class StubClassValidatorField extends ClassValidatorFields<{field: string}> {
+
+}
+
+describe("ClassValidatorFields Unit Tests", () => {
+    it("should initialize erros an validatedData variables on null", () => {
+        const validator =  new StubClassValidatorField()
+        expect(validator.errors).toBeNull() 
+        expect(validator.validatedData).toBeNull() 
+    })
+
+    it('should validate with errors', () => {
+        const spyValidateSync = jest.spyOn(libClassValidator, 'validateSync')
+        spyValidateSync.mockReturnValue([
+            {property: 'field', constraints:{isRequired: 'some error'}}
+        ])
+        const validator = new StubClassValidatorField()
+        expect(validator.validate(null)).toBeFalsy()
+        expect(spyValidateSync).toHaveBeenCalled()
+        expect(validator.validatedData).toBeNull() 
+        expect(validator.errors).toStrictEqual({field: ['some error']}) 
+    })
+
+    it('should validate without errors', () => {
+        const spyValidateSync = jest.spyOn(libClassValidator, 'validateSync')
+        spyValidateSync.mockReturnValue([])
+        const validator = new StubClassValidatorField()
+        expect(validator.validate({field: 'value'})).toBeTruthy()
+        expect(spyValidateSync).toHaveBeenCalled()
+        expect(validator.validatedData).toStrictEqual({field: 'value'}) 
+        expect(validator.errors).toBeNull()
+    })
+})

@@ -25,6 +25,7 @@
     "@types/uuid": "^9.0.0"
   },
   "dependencies": {
+    "class-validator": "^0.14.0",
     "uuid": "^9.0.0"
   }
 }
