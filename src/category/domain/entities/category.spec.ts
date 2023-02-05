@@ -1,6 +1,7 @@
 import Category, { CategoryProps } from './category'
 import { omit } from 'lodash'
 import UniqueEntityId from '../../../@seedwork/domain/value-objects/unique-entity-id.vo'
+import { CategoryValidator } from '../validators/category.validator'
 
 describe("Category Unit Test", () => {
     beforeEach(() => {
@@ -154,5 +155,18 @@ describe("Category Unit Test", () => {
         })        
         category.deactivate()
         expect(category.is_active).toBeFalsy()
+    })
+
+    test("should call validate when category is created", () => {
+        const spyValidate = jest.spyOn(Category, 'validate');
+        new Category({name: 'any name'});
+        expect(spyValidate).toHaveBeenCalledTimes(1);
+    })
+
+    test("should call validate when category is updated", () => {
+        const spyValidate = jest.spyOn(Category, 'validate');
+        const category = new Category({name: 'any name'});
+        category.update('new name', "description")
+        expect(spyValidate).toHaveBeenCalledTimes(2);
     })
 })
