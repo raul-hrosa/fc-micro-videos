@@ -159,7 +159,7 @@ describe("Category Unit Test", () => {
 
     test("should call validate when category is created", () => {
         const spyValidate = jest.spyOn(Category, 'validate');
-        new Category({name: 'any name'});
+        const category =new Category({name: 'any name'});
         expect(spyValidate).toHaveBeenCalledTimes(1);
     })
 

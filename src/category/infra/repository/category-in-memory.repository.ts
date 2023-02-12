@@ -25,10 +25,8 @@ export default class CategoryInMemoryRepository
     }
 
     protected async applySort(items: Category[], sort: string | null, sort_dir: SortDirection): Promise<Category[]> {
-        return super.applySort(
-            items, 
-            sort || "created_at", 
-            sort_dir || "desc"
-        )
+        return !sort  
+            ? super.applySort(items,"created_at","desc")
+            : super.applySort(items, sort, sort_dir)
     }
 }

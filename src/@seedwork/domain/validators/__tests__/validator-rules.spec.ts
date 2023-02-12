@@ -29,7 +29,7 @@ function assertIsValid(expected: ExpectedRule) {
 
 function runRule({value, property, rule, params = []}: Omit<ExpectedRule, "error">) {
     const validator = ValidatorRules.values(value, property)
-    const method = validator[rule]
+    const method = validator[rule] as any
     method.apply(validator, params)
 }
 
