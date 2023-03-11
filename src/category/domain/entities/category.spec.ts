@@ -1,7 +1,6 @@
 import Category, { CategoryProps } from './category'
 import { omit } from 'lodash'
-import UniqueEntityId from '../../../@seedwork/domain/value-objects/unique-entity-id.vo'
-import { CategoryValidator } from '../validators/category.validator'
+import UniqueEntityId from '@seedwork/domain/value-objects/unique-entity-id.vo'
 
 describe("Category Unit Test", () => {
     beforeEach(() => {
@@ -67,7 +66,8 @@ describe("Category Unit Test", () => {
             { props: { name: 'Movie'} },
             { props: { name: 'Movie'}, id: null },
             { props: { name: 'Movie'}, id: undefined },
-            { props: { name: 'Movie'}, id: new UniqueEntityId() }
+            { props: { name: 'Movie' }, id: new UniqueEntityId() }
+            
         ]
 
         data.forEach(i => {
